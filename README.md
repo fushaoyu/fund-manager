@@ -1,5 +1,120 @@
-# Vue 3 + TypeScript + Vite
+# 养基宝 (Fund Manager)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一个基于 Vue 3 + TypeScript 的基金管理应用，帮助用户轻松管理基金持仓，实时查看基金收益和估值数据。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 功能特性
+
+### 核心功能
+- **基金持仓管理**：添加、删除基金持有记录
+- **实时数据刷新**：获取基金实时估值和净值数据
+- **收益计算**：自动计算当日收益、持有收益和收益率
+- **持仓操作**：支持补仓、减仓操作
+- **数据导出**：导出持仓配置（开发中）
+
+### 数据展示
+- **账户总资产**：实时显示账户总资产
+- **当日涨跌**：显示当日所有基金的涨跌金额
+- **基金详情**：
+  - 基金名称和代码
+  - 最新净值和估值时间
+  - 当日收益和收益率
+  - 持有收益和收益率
+  - 持有份额和成本
+
+### 平台支持
+- 支持多平台管理：支付宝、微信、京东
+- 数据持久化存储，刷新页面不丢失数据
+
+## 技术栈
+
+- **前端框架**：Vue 3.5
+- **开发语言**：TypeScript 5.9
+- **构建工具**：Vite 7.2
+- **状态管理**：Pinia 3.0
+- **UI 组件库**：Element Plus 2.13
+- **样式方案**：Tailwind CSS 4.1 + SCSS
+- **数据持久化**：pinia-plugin-persistedstate
+
+## 数据来源
+
+- **实时估值数据**：新浪财经 API
+  - 更新频率：5-15 分钟
+  - 数据内容：实时估值、当日涨幅、估值时间、单位净值
+
+## 收益计算说明
+
+### 当日收益
+```
+当日收益 = (最新估值净值 - 昨日单位净值) × 持有份额
+```
+
+### 持有收益
+```
+持有收益 = (最新估值净值 - 初始净值) × 持有份额
+```
+
+### 持有收益率
+```
+持有收益率 = (持有收益 / 总成本) × 100%
+总成本 = 初始净值 × 持有份额
+```
+
+## 快速开始
+
+### 安装依赖
+```bash
+pnpm install
+```
+
+### 启动开发服务器
+```bash
+pnpm dev
+```
+
+### 构建生产版本
+```bash
+pnpm build
+```
+
+### 预览生产构建
+```bash
+pnpm preview
+```
+
+## 项目结构
+
+```
+fund-manager/
+├── src/
+│   ├── components/          # 公共组件
+│   ├── hooks/              # 自定义 Hooks
+│   ├── store/              # 状态管理
+│   ├── types/              # TypeScript 类型定义
+│   ├── utils/              # 工具函数
+│   └── view/              # 页面组件
+├── public/                 # 静态资源
+├── index.html             # HTML 入口
+├── vite.config.ts         # Vite 配置
+├── tailwind.config.js     # Tailwind CSS 配置
+└── tsconfig.json          # TypeScript 配置
+```
+
+## 注意事项
+
+- 实时估值数据仅供参考，实际净值以基金公司公布为准
+- 持有收益率计算基于用户输入的初始净值，请确保输入准确
+- 节假日和非交易时间，实时估值数据可能不会更新
+- 数据存储在浏览器本地，清除浏览器数据会丢失持仓信息
+
+## 开发说明
+
+### API 代理配置
+项目使用 Vite 代理解决跨域问题，代理配置位于 `vite.config.ts`：
+- `/api`：新浪财经 API
+
+### 数据持久化
+使用 `pinia-plugin-persistedstate` 插件实现数据持久化，配置位于 `fundStore.ts`。
+
+## 许可证
+
+MIT

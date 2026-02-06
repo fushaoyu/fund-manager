@@ -1,4 +1,5 @@
 export * from './dict';
+export * from './exportExcel';
 /**
  * 数字转换为金额格式
  * @param num

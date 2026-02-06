@@ -1,26 +1,37 @@
 <template>
   <div
-    class="w-full h-[100px] flex items-center justify-between bg-[#ffffff] border border-[#e5e5e5] rounded-xl box-border p-[20px]"
+    class="w-full flex flex-col gap-2 bg-[#ffffff] border border-[#e5e5e5] rounded-xl box-border p-[20px] text-[16px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)]"
   >
-    <div class="flex flex-col items-center gap-8">
-      <div class="text-[#999]">账户资产</div>
-      <div class="text-[#000] font-bold text-[24px]">
+    <fd-button
+      class="w-[50px]"
+      name="大盘云图"
+      type="primary"
+      size="large"
+      link
+      @on-click="openDapan"
+    />
+    <div class="flex items-center gap-2">
+      <div class="text-[#999]">账户资产:</div>
+      <div class="font-bold text-[24px]">
         {{ numberToMoney(props.accountAsset) }}
       </div>
     </div>
-    <div class="flex flex-col items-center gap-8">
-      <div class="text-[#999]">涨跌金额</div>
+    <div class="flex items-center gap-2">
+      <div class="text-[#999]">今日收益:</div>
       <div
         :class="props.changeAmount <= 0 ? 'text-[#00c853]' : 'text-[#ff4444]'"
         class="font-bold text-[24px]"
       >
-        {{ props.changeAmount > 0 ? '+' : '' }}{{ numberToMoney(props.changeAmount) }}
+        {{ props.changeAmount > 0 ? "+" : ""
+        }}{{ numberToMoney(props.changeAmount) }}
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { numberToMoney } from '@/utils/index';
+import { numberToMoney } from "@/utils/index";
+import FdButton from "@/components/fd-button/index.vue";
+
 const props = defineProps({
   accountAsset: {
     type: Number,
@@ -31,8 +42,8 @@ const props = defineProps({
     default: 0,
   },
 });
-const emit = defineEmits([]);
-// 组件挂载完成后执行
-onMounted(() => {});
+const openDapan = () => {
+  window.open("https://dapanyuntu.com/");
+};
 </script>
 <style lang="scss" scoped></style>

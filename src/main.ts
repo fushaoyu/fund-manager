@@ -9,7 +9,7 @@ const app = createApp(App);
 
 // 全局指令：数字颜色
 app.directive('number-color', {
-  mounted(el: HTMLElement, binding: DirectiveBinding) {
+  mounted(el: HTMLElement) {
     const value = el.innerText;
     // 是否是百分比
     const isPercent = value.indexOf('%') !== -1;

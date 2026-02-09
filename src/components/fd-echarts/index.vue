@@ -12,10 +12,19 @@ const props = defineProps({
 });
 
 const echartsRef = ref<HTMLDivElement>(null!);
+const echartsInstance = ref<any>(null);
 
 onMounted(() => {
-  const instance = echarts.init(echartsRef.value);
-  props.option && instance.setOption(props.option);
+  echartsInstance.value = echarts.init(echartsRef.value);
+  props.option && echartsInstance.value.setOption(props.option);
 });
+watch(
+  () => props.option,
+  (newVal) => {
+    newVal &&
+      echartsRef.value &&
+      echartsInstance.value.setOption(newVal);
+  },
+);
 </script>
 <style lang="scss" scoped></style>

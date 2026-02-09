@@ -264,7 +264,10 @@ export const useFundStore = defineStore(
       if (!dayjs().isSame(fundData.gztime, 'year')) {
         item.x_axis = [];
         item.y_axis = [];
-      } else if (item.x_axis.length === 0 || item.x_axis.some((x) => x.indexOf(fundData.gztime) === -1)) {
+      } else if (
+        item.x_axis.length === 0 ||
+        item.x_axis.some((x) => x.indexOf(fundData.gztime) === -1)
+      ) {
         const date = fundData.gztime.substr(11);
         item.x_axis.push(date);
         item.y_axis.push(Number(fundData.gsz));

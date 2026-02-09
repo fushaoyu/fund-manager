@@ -13,16 +13,16 @@
     <fd-table rowKey="id" :tableData="tableData" :columns="columns">
       <template #new_info="{ row }">
         <div>
-          最近净值: <span>{{ row.new_net_value }}</span>
+          最新净值: <span>{{ row.new_net_value }}</span>
         </div>
         <div>
-          最近收益: <span v-number-color>{{ row.new_return }}元</span>
+          最新收益: <span v-number-color>{{ row.new_return }}元</span>
         </div>
         <div>
-          最近收益率: <span v-number-color>{{ row.new_increase }}%</span>
+          最新收益率: <span v-number-color>{{ row.new_increase }}%</span>
         </div>
         <div>
-          最近估值时间: <span>{{ row.new_valuation_ime }}</span>
+          最新估值时间: <span>{{ row.new_valuation_ime }}</span>
         </div>
       </template>
       <template #holding_info="{ row }">

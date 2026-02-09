@@ -36,13 +36,13 @@ export const columns = [
     options: {
       minWidth: 150,
       formatter: (row: IFundStore.IUserFundsItem) => {
-        const value = row.position_amount + row.holding_return;
+        const value = Number(row.position_amount) + Number(row.holding_return);
         return h(
           'div',
           {
             class: value > row.position_amount ? 'text-[red]' : 'text-[green]',
           },
-          value.toFixed(2),
+          value ? value.toFixed(2) : 0,
         );
       },
     },
@@ -64,7 +64,7 @@ export const columns = [
         return h(
           'div',
           { style: 'font-weight: 700;' },
-          row.quantity.toFixed(2),
+          Number(row.quantity).toFixed(2),
         );
       },
     },

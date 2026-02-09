@@ -342,7 +342,7 @@ export const useFundStore = defineStore(
       if (!data) return errorToast('基金不存在');
       // 成本 = 补充成本 + 初始成本
       const replenishPositionAmount =
-        data.position_amount + fund.position_amount;
+        Number(data.position_amount) + Number(fund.position_amount);
       // 数量 = 初始数量 + 补充数量
       const replenishQuantity = Number(data.quantity) + Number(fund.quantity);
       // 净值 = 总成本 / 总数量
@@ -376,6 +376,16 @@ export const useFundStore = defineStore(
     const removeUserFunds = (id: string) => {
       user_funds.value = user_funds.value.filter((item) => item.id !== id);
     };
+    // 导入基金数据
+    const importUserFunds = async (funds: IFundStore.IUserFundsItem[]) => {
+      // 合并基金数据，去重（保留最新数据）
+      user_funds.value = [...user_funds.value, ...funds].filter(
+        (item, index, arr) =>
+          arr.findIndex((i) => i.fund_code === item.fund_code) === index,
+      );
+      // 刷新基金实时数据
+      refreshFundData();
+    };
     return {
       user_funds,
       getFundInfo,
@@ -384,6 +394,7 @@ export const useFundStore = defineStore(
       replenishUserFunds,
       reduceUserFunds,
       removeUserFunds,
+      importUserFunds,
     };
   },
   {

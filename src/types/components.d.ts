@@ -23,6 +23,7 @@ declare module 'vue' {
     ElSelectV2: typeof import('element-plus/es')['ElSelectV2']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     FdButton: typeof import('./../components/fd-button/index.vue')['default']
     FdDialogForm: typeof import('./../components/fd-dialog-form/index.vue')['default']
     FdEcharts: typeof import('./../components/fd-echarts/index.vue')['default']
@@ -32,6 +33,7 @@ declare module 'vue' {
     FdFormSelectV2: typeof import('./../components/fd-form-select-v2/index.vue')['default']
     FdFormText: typeof import('./../components/fd-form-text/index.vue')['default']
     FdTable: typeof import('./../components/fd-table/index.vue')['default']
+    FdUploadButton: typeof import('./../components/fd-upload-button/index.vue')['default']
     TableColumns: typeof import('./../components/fd-table/tableColumns.vue')['default']
   }
 }

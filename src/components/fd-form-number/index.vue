@@ -18,7 +18,7 @@
         :style="style"
         @change="handleChange"
       >
-        <template v-for="(vallue, name) in $slots" #[name]="slotData">
+        <template v-for="(_vallue, name) in $slots" #[name]="slotData">
           <slot :name="name" v-bind="slotData || {}"></slot>
         </template>
       </el-input-number>
@@ -117,7 +117,7 @@ const Placeholder = computed(() => {
   return props.placeholder || `请输入${props.label}`;
 });
 
-const validator = (rule: any, value: any, callback: any) => {
+const validator = (_rule: any, value: any, callback: any) => {
   if (
     (value === undefined ||
       value === null ||

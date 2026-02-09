@@ -14,7 +14,7 @@
         :placeholder="Placeholder"
         @input="handleChange"
       >
-        <template v-for="(vallue, name) in $slots" #[name]="slotData">
+        <template v-for="(_vallue, name) in $slots" #[name]="slotData">
           <slot :name="name" v-bind="slotData || {}"></slot>
         </template>
       </el-input>

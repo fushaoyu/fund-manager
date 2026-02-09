@@ -50,7 +50,6 @@
 import { ACCOUNT } from '@/utils/dict';
 import { useFundStore } from '@/store/fundStore';
 import FdDialogForm from '@/components/fd-dialog-form/index.vue';
-import FdFormText from '@/components/fd-form-text/index.vue';
 import FdFormNumber from '@/components/fd-form-number/index.vue';
 import FdFormSelect from '@/components/fd-form-select/index.vue';
 import FdFormSelectV2 from '@/components/fd-form-select-v2/index.vue';

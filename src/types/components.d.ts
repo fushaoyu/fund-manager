@@ -17,10 +17,8 @@ declare module 'vue' {
     ElEmpty: typeof import('element-plus/es')['ElEmpty']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
-    ElInput: typeof import('element-plus/es')['ElInput']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElOption: typeof import('element-plus/es')['ElOption']
-    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSelectV2: typeof import('element-plus/es')['ElSelectV2']
     ElTable: typeof import('element-plus/es')['ElTable']
@@ -33,10 +31,7 @@ declare module 'vue' {
     FdFormSelect: typeof import('./../components/fd-form-select/index.vue')['default']
     FdFormSelectV2: typeof import('./../components/fd-form-select-v2/index.vue')['default']
     FdFormText: typeof import('./../components/fd-form-text/index.vue')['default']
-    FdNumber: typeof import('./../components/fd-number/index.vue')['default']
-    FdSelect: typeof import('./../components/fd-select/index.vue')['default']
     FdTable: typeof import('./../components/fd-table/index.vue')['default']
-    FdText: typeof import('./../components/fd-text/index.vue')['default']
     TableColumns: typeof import('./../components/fd-table/tableColumns.vue')['default']
   }
 }

@@ -27,6 +27,8 @@ export const useFundStore = defineStore(
         quantity: 19987.18,
         position_amount: 31004.11,
         initial_buy_time: '2026-02-06 17:36:20',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: 'a7d32f29-c05e-4277-91cc-037a78f43940',
@@ -46,6 +48,8 @@ export const useFundStore = defineStore(
         quantity: 61563.36,
         position_amount: 74752.8,
         initial_buy_time: '2026-02-06 17:48:55',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: 'c64d9d82-628d-49cb-8927-e828c1760fa4',
@@ -65,6 +69,8 @@ export const useFundStore = defineStore(
         quantity: 45657.93,
         position_amount: 50000,
         initial_buy_time: '2026-02-06 17:51:01',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: '3a342912-6db8-4803-a603-0591a2d8ae94',
@@ -84,6 +90,8 @@ export const useFundStore = defineStore(
         quantity: 1179.5500000000002,
         position_amount: 4591.01,
         initial_buy_time: '2026-02-06 17:37:30',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: 'fda8f725-5681-40a4-9d71-512bb696a82a',
@@ -103,6 +111,8 @@ export const useFundStore = defineStore(
         quantity: 9865.22,
         position_amount: 10439.38,
         initial_buy_time: '2026-02-06 17:48:07',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: '9bc78d25-5881-44a8-93bf-d129b7616b82',
@@ -122,6 +132,8 @@ export const useFundStore = defineStore(
         quantity: 1078.34,
         position_amount: 4447.42,
         initial_buy_time: '2026-02-06 17:44:36',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: '11ba6cc6-88c7-45c5-aa23-5d60603de4d1',
@@ -141,6 +153,8 @@ export const useFundStore = defineStore(
         quantity: 1172.03,
         position_amount: 1229.81,
         initial_buy_time: '2026-02-06 17:39:12',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: '34e8a30c-18f3-4176-9097-d30e91d14465',
@@ -160,6 +174,8 @@ export const useFundStore = defineStore(
         quantity: 663.2,
         position_amount: 501.76,
         initial_buy_time: '2026-02-06 17:42:21',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: '33ab0a03-bee6-4b58-8c00-b7bd78bda923',
@@ -179,10 +195,12 @@ export const useFundStore = defineStore(
         quantity: 5373.6900000000005,
         position_amount: 11000,
         initial_buy_time: '2026-02-06 17:16:42',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: 'c0d6c816-8227-46cf-be07-40bc16efabd6',
-        fund_name: '嘉实上证科创芯片ETF发起连接C',
+        fund_name: '嘉实上证科创板芯片ETF发起联接C',
         fund_code: '017470',
         account: 2,
         accountText: '腾讯理财通',
@@ -198,6 +216,8 @@ export const useFundStore = defineStore(
         quantity: 4347.45,
         position_amount: 10000,
         initial_buy_time: '2026-02-06 17:53:47',
+        x_axis: [],
+        y_axis: [],
       },
       {
         id: '1025cba3-d699-49bd-ab09-3028e2e2aba3',
@@ -217,6 +237,8 @@ export const useFundStore = defineStore(
         quantity: 5571.08,
         position_amount: 8922.83,
         initial_buy_time: '2026-02-06 17:45:28',
+        x_axis: [],
+        y_axis: [],
       },
     ]);
 
@@ -237,6 +259,16 @@ export const useFundStore = defineStore(
       // 解析回调函数格式的数据
       const dataStr = text.replace(/^jsonpgz\(|\);?$/g, '');
       const fundData = JSON.parse(dataStr);
+      // console.log(dayjs().isSame(fundData.gztime, 'year'), '是否相同');
+      // 截取时间部分 hh:mm:ss
+      if (!dayjs().isSame(fundData.gztime, 'year')) {
+        item.x_axis = [];
+        item.y_axis = [];
+      } else if (item.x_axis.some((x) => x.indexOf(fundData.gztime) === -1)) {
+        const date = fundData.gztime.substr(11);
+        item.x_axis.push(date);
+        item.y_axis.push(Number(fundData.gsz));
+      }
       // 计算对比昨日收益 = (最新净值 - 单位净值) * 持有的份额
       const new_return =
         (Number(fundData.gsz) - Number(fundData.dwjz)) * item.quantity;
@@ -293,6 +325,8 @@ export const useFundStore = defineStore(
         quantity: fund.quantity,
         position_amount: fund.position_amount,
         initial_buy_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        x_axis: [],
+        y_axis: [],
       };
       const fundData = await getFundInfo(data);
       user_funds.value.push(fundData);

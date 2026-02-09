@@ -5,7 +5,9 @@
     @click.stop="handleClick"
   >
     <template #icon v-if="iconName">
-      <el-icon :name="iconName" :size="iconSize" />
+      <el-icon :size="iconSize">
+        <component :is="iconName" />
+      </el-icon>
     </template>
     {{ name }}
   </el-button>

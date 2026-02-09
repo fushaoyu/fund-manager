@@ -48,6 +48,14 @@ export const columns = [
     },
   },
   {
+    title: '今日盈亏',
+    key: 'today_profit_loss',
+    slotName: 'today_profit_loss',
+    options: {
+      width: 250,
+    },
+  },
+  {
     title: '持有数量',
     key: 'quantity',
     options: {
@@ -67,11 +75,7 @@ export const columns = [
     options: {
       minWidth: 150,
       formatter: (row: IFundStore.IUserFundsItem) => {
-        return h(
-          'div',
-          { style: 'font-weight: 700;' },
-          row.position_amount,
-        );
+        return h('div', { style: 'font-weight: 700;' }, row.position_amount);
       },
     },
   },

@@ -1,16 +1,16 @@
 <template>
   <div class="index-page">
-    <announcement :accountAsset="accountAsset" :changeAmount="changeAmount" />
+    <announcement
+      :accountAsset="accountAsset"
+      :changeAmount="changeAmount"
+      :updateDate="updateDate"
+    />
     <div class="flex gap-2">
       <fd-button name="新增持有" type="primary" @on-click="handleAdd" />
       <fd-button name="刷新" type="success" @on-click="refreshFundData" />
       <fd-button name="导出持仓配置" type="default" @on-click="handleExport" />
     </div>
-    <fd-table
-      rowKey="id"
-      :tableData="tableData"
-      :columns="columns"
-    >
+    <fd-table rowKey="id" :tableData="tableData" :columns="columns">
       <template #new_info="{ row }">
         <div>
           最近净值: <span>{{ row.new_net_value }}</span>
@@ -40,6 +40,9 @@
           持有收益率:
           <span v-number-color>{{ row.holding_return_rate }}%</span>
         </div>
+      </template>
+      <template #today_profit_loss="{ row }">
+        <LineEchart :y-axis="row.y_axis" :x-axis="row.x_axis" />
       </template>
       <template #operate="{ row }">
         <fd-button
@@ -72,16 +75,17 @@
 </template>
 
 <script lang="ts" setup>
-import { columns } from "./config";
-import { useFundStore } from "@/store/fundStore";
-import { useComponentRef, useElMessageBox } from "@/hooks";
-import { exportExcel } from "@/utils";
-import FdTable from "@/components/fd-table/index.vue";
-import Announcement from "./announcement.vue";
-import FdButton from "@/components/fd-button/index.vue";
-import FormData from "./formData.vue";
-import ReplenishForm from "./replenishForm.vue";
-import ReduceStockForm from "./reduceStockForm.vue";
+import { columns } from './config';
+import { useFundStore } from '@/store/fundStore';
+import { useComponentRef, useElMessageBox } from '@/hooks';
+import { exportExcel } from '@/utils';
+import FdTable from '@/components/fd-table/index.vue';
+import Announcement from './announcement.vue';
+import FdButton from '@/components/fd-button/index.vue';
+import FormData from './formData.vue';
+import ReplenishForm from './replenishForm.vue';
+import ReduceStockForm from './reduceStockForm.vue';
+import LineEchart from './lineEhart.vue';
 
 const fundStore = useFundStore();
 const formDataRef = useComponentRef(FormData);
@@ -90,8 +94,14 @@ const reduceStockFormRef = useComponentRef(ReduceStockForm);
 
 const { confirm, successToast } = useElMessageBox();
 
+const timeOut = ref<any>(null!);
+// 持仓数据
 const tableData = computed<IFundStore.IUserFundsItem[]>(() =>
-  fundStore.user_funds.sort((a, b) => b.new_return - a.new_return)
+  fundStore.user_funds.sort((a, b) => b.new_return - a.new_return),
+);
+// 更新日期
+const updateDate = computed(
+  () => fundStore.user_funds[0]?.new_valuation_ime || '',
 );
 // 账户资产
 const accountAsset = computed(() => {
@@ -105,25 +115,30 @@ const changeAmount = computed(() => {
     return prev + cur.new_return;
   }, 0);
 });
-const refreshFundData = async () => {
-  await fundStore.refreshFundData();
-};
+
+onMounted(() => {
+  timeOut.value = setInterval(() => {
+    refreshFundData();
+  }, 1000 * 30);
+});
+onUnmounted(() => {
+  timeOut.value && clearInterval(timeOut.value);
+  timeOut.value = null;
+});
+// 刷新持仓数据
+const refreshFundData = async () => await fundStore.refreshFundData();
 // 新增持有
-const handleAdd = () => {
-  formDataRef.value?.show();
-};
+const handleAdd = () => formDataRef.value?.show();
 // 补仓
-const handleReplenish = async (row: IFundStore.IUserFundsItem) => {
+const handleReplenish = async (row: IFundStore.IUserFundsItem) =>
   replenishFormRef.value?.show(row.id);
-};
 // 减仓
-const handleReduceStock = async (row: IFundStore.IUserFundsItem) => {
+const handleReduceStock = async (row: IFundStore.IUserFundsItem) =>
   reduceStockFormRef.value?.show(row.id);
-};
 // 删除持有
 const handleRemove = async (row: IFundStore.IUserFundsItem) => {
   await confirm({
-    title: "确认删除",
+    title: '确认删除',
     message: `确认删除基金 ${row.fund_name} 吗？`,
   });
   fundStore.removeUserFunds(row.id);
@@ -133,28 +148,30 @@ const handleExport = async () => {
   try {
     // 导出字段映射
     const exportFields = {
-      id: "基金id（本地持仓的唯一ID）",
-      fund_name: "基金名称",
-      fund_code: "基金代码",
-      account: "平台代码",
-      accountText: "平台文本",
-      new_net_value: "最新净值",
-      new_return: "最新收益",
-      new_increase: "最新收益率",
-      new_valuation_ime: "最新估值时间",
-      net_value: "净值",
-      net_value_time: "净值时间",
-      initial_net_value: "初始净值",
-      holding_return: "持有收益",
-      holding_return_rate: "持有收益率",
-      quantity: "持有数量 份额",
-      position_amount: "持仓成本（买入时的总金额）",
-      initial_buy_time: "初次添加时间",
+      id: '基金id（本地持仓的唯一ID）',
+      fund_name: '基金名称',
+      fund_code: '基金代码',
+      account: '平台代码',
+      accountText: '平台文本',
+      new_net_value: '最新净值',
+      new_return: '最新收益',
+      new_increase: '最新收益率',
+      new_valuation_ime: '最新估值时间',
+      net_value: '净值',
+      net_value_time: '净值时间',
+      initial_net_value: '初始净值',
+      holding_return: '持有收益',
+      holding_return_rate: '持有收益率',
+      quantity: '持有数量 份额',
+      position_amount: '持仓成本（买入时的总金额）',
+      initial_buy_time: '初次添加时间',
+      x_axis: '今日走势时间',
+      y_axis: '今日走势净值',
     };
     await exportExcel(tableData.value, exportFields);
-    successToast("导出成功");
+    successToast('导出成功');
   } catch (error) {
-    console.error("导出Excel失败:", error);
+    console.error('导出Excel失败:', error);
   }
 };
 </script>

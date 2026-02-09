@@ -2,6 +2,8 @@ declare global {
   namespace IFundStore {
     // 新增基金参数
     interface IAddUserFundParam {
+      // 基金值
+      fund_value: string;
       // 基金名称
       fund_name: string;
       // 基金代码
@@ -54,6 +56,8 @@ declare global {
       quantity: number; // 持有数量 份额
       position_amount: number; // 持仓成本（买入时的总金额）
       initial_buy_time: string; // 初次添加时间
+      x_axis: string[]; // x轴时间数据
+      y_axis: number[]; // y轴净值数据
     }
   }
 }

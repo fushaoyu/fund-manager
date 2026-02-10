@@ -37,7 +37,7 @@
             popper-style="background-color: #1A0F36;  box-shadow: inset 0 0 15px 2px rgba(139, 92, 246, 0.5);"
           >
             <template #reference>
-              <el-icon class="cursor-pointer" size="12"
+              <el-icon class="cursor-pointer z-10" size="12"
                 ><WarningFilled
               /></el-icon>
             </template>

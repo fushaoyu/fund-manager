@@ -33,6 +33,7 @@
           </el-button>
           <el-button
             type="primary"
+            color="#8B5CF6"
             :size="size"
             :loading="submitLoading"
             @click.stop="handleClick"

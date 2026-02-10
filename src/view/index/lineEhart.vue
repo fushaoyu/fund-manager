@@ -17,7 +17,6 @@ const props = defineProps({
 const option = computed(() => ({
   tooltip: {
     trigger: 'axis',
-    show: true,
   },
   grid: {
     left: '0',

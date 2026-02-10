@@ -1,0 +1,152 @@
+/* 全局覆盖 Element Plus 所有按钮类型 - 高对比度赛博朋克风格 */
+:root {
+  /* ========== 通用基础变量（核心修改：提亮按钮基底+增强光效） ========== */
+  --el-button-font-size: 14px;
+  --el-button-border-radius: 4px;
+  --el-button-border-width: 1.5px; /* 【修改】边框加宽，增强对比 */
+  --el-button-padding: 12px 20px;
+  --el-button-hover-scale: 1.03; /* 【修改】hover放大更明显 */
+  --el-button-active-scale: 0.98;
+  /* 【核心修改】按钮基底轻微提亮，拉大与页面背景的对比 */
+  --el-btn-base-bg: #181039; 
+  --el-btn-disabled-bg: #241B45; /* 【修改】禁用态基底也提亮 */
+  --el-btn-disabled-text: #F0F0F7; /* 【修改】禁用态文字更亮 */
+  --el-btn-disabled-border: #403858; /* 【修改】禁用态边框更亮 */
+
+  /* ========== 各类型按钮核心变量（增强霓虹色亮度+饱和度） ========== */
+  /* 1. default / 空类型（''）- 霓虹深蓝（亮度提升） */
+  --el-button-default-text-color: #FFFFFF; /* 【修改】文字更亮 */
+  --el-button-default-bg-color: var(--el-btn-base-bg);
+  --el-button-default-border-color: #60A5FA; /* 【修改】更亮的霓虹深蓝 */
+  --el-button-default-hover-border: #93C5FD;
+  /* 【修改】光效模糊半径增大+透明度提高，增强对比 */
+  --el-button-default-shadow: 0 0 10px 3px rgba(96, 165, 250, 0.5);
+
+  /* 2. primary - 核心霓虹紫（亮度提升） */
+  --el-button-primary-text-color: #FFFFFF;
+  --el-button-primary-bg-color: #211445; /* 【修改】主按钮基底再提亮 */
+  --el-button-primary-border-color: #C084FC; /* 【修改】更亮的霓虹紫 */
+  --el-button-primary-hover-border: #DDD6FE;
+  --el-button-primary-shadow: 0 0 10px 3px rgba(192, 132, 252, 0.6);
+
+  /* 3. success - 赛博朋克青绿（亮度提升） */
+  --el-button-success-text-color: #FFFFFF;
+  --el-button-success-bg-color: var(--el-btn-base-bg);
+  --el-button-success-border-color: #34D399; /* 【修改】更亮的霓虹青绿 */
+  --el-button-success-hover-border: #6EE7B7;
+  --el-button-success-shadow: 0 0 10px 3px rgba(52, 211, 153, 0.5);
+
+  /* 4. warning - 霓虹橙黄（亮度提升） */
+  --el-button-warning-text-color: #FFFFFF;
+  --el-button-warning-bg-color: var(--el-btn-base-bg);
+  --el-button-warning-border-color: #FBBF24; /* 【修改】更亮的霓虹橙黄 */
+  --el-button-warning-hover-border: #FCD34D;
+  --el-button-warning-shadow: 0 0 10px 3px rgba(251, 191, 36, 0.5);
+
+  /* 5. danger - 霓虹粉（亮度提升） */
+  --el-button-danger-text-color: #FFFFFF;
+  --el-button-danger-bg-color: var(--el-btn-base-bg);
+  --el-button-danger-border-color: #F472B6; /* 【修改】更亮的霓虹粉 */
+  --el-button-danger-hover-border: #F9A8D4;
+  --el-button-danger-shadow: 0 0 10px 3px rgba(244, 114, 182, 0.5);
+
+  /* 6. info - 霓虹浅蓝（亮度提升） */
+  --el-button-info-text-color: #FFFFFF;
+  --el-button-info-bg-color: var(--el-btn-base-bg);
+  --el-button-info-border-color: #22D3EE; /* 【修改】更亮的霓虹浅蓝 */
+  --el-button-info-hover-border: #67E8F9;
+  --el-button-info-shadow: 0 0 10px 3px rgba(34, 211, 238, 0.5);
+
+  /* 7. text 按钮（废弃）- 增强文字对比度 */
+  --el-button-text-color: #C084FC; /* 【修改】文字更亮 */
+  --el-button-text-hover-color: #DDD6FE;
+  --el-button-text-disabled-color: #F0F0F7;
+}
+
+/* ========== 所有按钮基础样式（继承修改后的变量） ========== */
+.el-button {
+  position: relative;
+  transition: all 0.3s ease !important;
+  background-color: var(--el-button-bg-color) !important;
+  color: var(--el-button-text-color) !important;
+  border: var(--el-button-border-width) solid var(--el-button-border-color) !important;
+  box-shadow: var(--el-button-shadow) !important;
+  /* 新增：轻微外描边，进一步增强与背景的区分 */
+  outline: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 各类型按钮专属光效（继承高对比度光效） ========== */
+.el-button--primary { box-shadow: var(--el-button-primary-shadow) !important; }
+.el-button--success { box-shadow: var(--el-button-success-shadow) !important; }
+.el-button--warning { box-shadow: var(--el-button-warning-shadow) !important; }
+.el-button--danger { box-shadow: var(--el-button-danger-shadow) !important; }
+.el-button--info { box-shadow: var(--el-button-info-shadow) !important; }
+.el-button:not([class*="el-button--"]) { box-shadow: var(--el-button-default-shadow) !important; }
+
+/* ========== 所有类型按钮交互态（增强对比） ========== */
+.el-button:not(.is-disabled):hover {
+  transform: scale(var(--el-button-hover-scale)) !important;
+  border-color: var(--el-button-hover-border, var(--el-button-border-color)) !important;
+  box-shadow: 
+    0 0 10px 6px rgba(255, 255, 255, 0.15), /* 【修改】光效范围更大 */
+    0 0 10px 6px rgba(var(--el-button-neon-rgb), 0.7), /* 【修改】透明度更高 */
+    inset 0 0 12px 2px rgba(var(--el-button-neon-rgb), 0.5) !important;
+}
+/* 为每个类型绑定 neon-rgb（对应修改后的亮霓虹色） */
+.el-button--default { --el-button-neon-rgb: 96, 165, 250; }
+.el-button--primary { --el-button-neon-rgb: 192, 132, 252; }
+.el-button--success { --el-button-neon-rgb: 52, 211, 153; }
+.el-button--warning { --el-button-neon-rgb: 251, 191, 36; }
+.el-button--danger { --el-button-neon-rgb: 244, 114, 182; }
+.el-button--info { --el-button-neon-rgb: 34, 211, 238; }
+.el-button:not([class*="el-button--"]) { --el-button-neon-rgb: 96, 165, 250; }
+
+/* active：光效收敛但仍保持高对比 */
+.el-button:not(.is-disabled):active {
+  transform: scale(var(--el-button-active-scale)) !important;
+  box-shadow: 
+    0 0 15px 4px rgba(var(--el-button-neon-rgb), 0.6), /* 【修改】光效更亮 */
+    inset 0 0 18px 3px rgba(var(--el-button-neon-rgb), 0.4) !important;
+}
+
+/* ========== 禁用态（仍保持基础对比度） ========== */
+.el-button.is-disabled {
+  background-color: var(--el-btn-disabled-bg) !important;
+  color: var(--el-btn-disabled-text) !important;
+  border-color: var(--el-btn-disabled-border) !important;
+  box-shadow: 0 0 8px 2px rgba(64, 56, 88, 0.3) !important; /* 【修改】禁用态光效也增强 */
+  transform: none !important;
+  cursor: not-allowed !important;
+  outline: none !important;
+}
+
+/* ========== text 按钮（增强文字+背景对比） ========== */
+.el-button--text {
+  background: transparent !important;
+  border: none !important;
+  color: var(--el-button-text-color) !important;
+  box-shadow: none !important;
+  padding: 12px 16px !important;
+}
+.el-button--text:hover {
+  color: var(--el-button-text-hover-color) !important;
+  /* 【修改】hover背景加深，增强对比 */
+  background: rgba(192, 132, 252, 0.2) !important;
+  box-shadow: 0 0 10px 4px rgba(192, 132, 252, 0.5) !important;
+  transform: scale(var(--el-button-hover-scale)) !important;
+}
+.el-button--text.is-disabled {
+  color: var(--el-button-text-disabled-color) !important;
+  background: rgba(64, 56, 88, 0.1) !important; /* 【修改】禁用态加浅背景 */
+  box-shadow: none !important;
+}
+
+/* ========== 圆角/圆形按钮适配（高对比版） ========== */
+.el-button--round {
+  border-radius: 20px !important;
+  box-shadow: 0 0 22px 4px rgba(var(--el-button-neon-rgb), 0.5) !important;
+}
+.el-button--circle {
+  border-radius: 50% !important;
+  box-shadow: 0 0 22px 4px rgba(var(--el-button-neon-rgb), 0.5) !important;
+}

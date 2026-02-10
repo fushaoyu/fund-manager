@@ -6,75 +6,74 @@
       :updateDate="updateDate"
     />
     <div class="flex gap-2">
-      <fd-button name="新增持有" type="primary" @on-click="handleAdd" />
-      <fd-button name="刷新" type="success" @on-click="refreshFundData" />
-      <fd-button name="导出持仓配置" type="default" @on-click="handleExport" />
+      <fd-button name="新增持有" color="#8B5CF6" @on-click="handleAdd" />
+      <fd-button name="刷新收益" color="#1A0F36" @on-click="refreshFundData" />
+      <fd-button name="导出持仓" color="#1A0F36" @on-click="handleExport" />
       <fd-upload-button
         name="导入模版"
-        type="default"
+        color="#1A0F36"
         @on-change="handleImport"
       />
       <fd-button
-        name="下载导入模版"
-        type="default"
+        name="下载模版"
+        color="#1A0F36"
         @on-click="handleDownloadTemplate"
       />
     </div>
-    <fd-table rowKey="id" :tableData="tableData" :columns="columns">
-      <template #new_info="{ row }">
-        <div>
-          最新净值: <span>{{ row.new_net_value }}</span>
+    <div class="flex flex-wrap gap-2">
+      <div class="fd-card-box" v-for="(item, index) in tableData" :key="index">
+        <div class="fd-card-box_title">
+          <div class="flex gap-2">
+            {{ item.fund_name }}
+            <span v-number-color>{{ item.holding_return_rate }}%</span>
+          </div>
+          <el-popover
+            effect="dark"
+            trigger="click"
+            width="400"
+            placement="bottom-start"
+            popper-style="background-color: #1A0F36;  box-shadow: inset 0 0 15px 2px rgba(139, 92, 246, 0.5);"
+          >
+            <template #reference>
+              <el-icon class="cursor-pointer" size="12"
+                ><WarningFilled
+              /></el-icon>
+            </template>
+            <LineEchart :x-axis="item.x_axis" :y-axis="item.y_axis" />
+          </el-popover>
         </div>
-        <div>
-          最新收益: <span v-number-color>{{ row.new_return }}元</span>
+        <div class="flex items-center justify-between text-[#A5A3B0]">
+          <span>{{ item.fund_code }}</span>
+          <span>{{ item.accountText }}</span>
+          <span>{{ item.new_valuation_ime }}</span>
         </div>
-        <div>
-          最新收益率: <span v-number-color>{{ row.new_increase }}%</span>
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col gap-2">
+            <div>
+              最新净值: <span>{{ item.new_net_value }}</span>
+            </div>
+            <div>
+              最新收益: <span v-number-color>{{ item.new_return }}元</span>
+            </div>
+            <div>
+              最新收益率: <span v-number-color>{{ item.new_increase }}%</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div>
+              昨日净值: <span>{{ item.net_value }}</span>
+            </div>
+            <div>
+              持有净值: <span>{{ item.initial_net_value }}</span>
+            </div>
+            <div>
+              持有收益:
+              <span v-number-color>{{ item.holding_return }}元</span>
+            </div>
+          </div>
         </div>
-        <div>
-          最新估值时间: <span>{{ row.new_valuation_ime }}</span>
-        </div>
-      </template>
-      <template #holding_info="{ row }">
-        <div>
-          昨日净值: <span>{{ row.net_value }}</span>
-        </div>
-        <div>
-          持有净值: <span>{{ row.initial_net_value }}</span>
-        </div>
-        <div>
-          持有收益:
-          <span v-number-color>{{ row.holding_return }}</span>
-        </div>
-        <div>
-          持有收益率:
-          <span v-number-color>{{ row.holding_return_rate }}%</span>
-        </div>
-      </template>
-      <template #today_profit_loss="{ row }">
-        <LineEchart :y-axis="row.y_axis" :x-axis="row.x_axis" />
-      </template>
-      <template #operate="{ row }">
-        <fd-button
-          name="补仓"
-          type="primary"
-          link
-          @on-click="handleReplenish(row)"
-        />
-        <fd-button
-          name="减仓"
-          type="primary"
-          link
-          @on-click="handleReduceStock(row)"
-        />
-        <fd-button
-          name="删除"
-          type="danger"
-          link
-          @on-click="handleRemove(row)"
-        />
-      </template>
-    </fd-table>
+      </div>
+    </div>
   </div>
   <!-- 新增持仓表单 -->
   <formData ref="formDataRef" />
@@ -85,7 +84,6 @@
 </template>
 
 <script lang="ts" setup>
-import { columns } from './config';
 import { dayjs } from 'element-plus';
 import { useFundStore } from '@/store/fundStore';
 import { useComponentRef, useElMessageBox } from '@/hooks';
@@ -97,7 +95,6 @@ import {
   FUND_FIELD_MAPPING,
   getHeaderToFieldMap,
 } from '@/utils';
-import FdTable from '@/components/fd-table/index.vue';
 import Announcement from './announcement.vue';
 import FdButton from '@/components/fd-button/index.vue';
 import FdUploadButton from '@/components/fd-upload-button/index.vue';
@@ -152,6 +149,8 @@ onUnmounted(() => {
   timeOut.value && clearInterval(timeOut.value);
   timeOut.value = null;
 });
+
+
 // 刷新持仓数据
 const refreshFundData = async () => await fundStore.refreshFundData();
 // 新增持有

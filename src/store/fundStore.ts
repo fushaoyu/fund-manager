@@ -242,7 +242,6 @@ export const useFundStore = defineStore(
     //   },
     // ]);
     const user_funds = ref<IFundStore.IUserFundsItem[]>([]);
-
     /**
      * 获取基金实时估值数据（适配新接口）
      * @param fundCode 6位基金代码
@@ -260,8 +259,8 @@ export const useFundStore = defineStore(
       // 解析回调函数格式的数据
       const dataStr = text.replace(/^jsonpgz\(|\);?$/g, '');
       const fundData = JSON.parse(dataStr);
-      // 截取时间部分 hh:mm:ss
-      if (!dayjs().isSame(fundData.gztime, 'year')) {
+      // 查看最新估值如果是昨日清空数据
+      if (!dayjs().isSame(fundData.new_valuation_ime, 'day')) {
         item.x_axis = [];
         item.y_axis = [];
       } else if (

@@ -1,8 +1,9 @@
 import { createApp } from 'vue';
-import './style.css';
 import App from './App.vue';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+import './style.css';
+import './style/element-plus.scss';
 // 如果您正在使用CDN引入，请删除下面一行。
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import store from './store/index';
@@ -18,9 +19,7 @@ app.directive('number-color', {
     const count = Number(value.replace(/[^\d.-]/g, ''));
     el.style.color = count > 0 ? 'red' : 'green';
     el.innerText = count > 0 ? '+' + count.toFixed(2) : count.toFixed(2);
-    if (isPercent) {
-      el.innerText += '%';
-    }
+    if (isPercent) el.innerText += '%';
   },
 });
 

@@ -31,7 +31,7 @@ export const fundJsonpApi = (code: string): Promise<IJsonpData> => {
     try {
       // 创建script标签
       const script = document.createElement('script');
-      script.src = `http://fundgz.1234567.com.cn/js/${code}.js?timestamp=${Date.now()}`;
+      script.src = `https://fundgz.1234567.com.cn/js/${code}.js?timestamp=${Date.now()}`;
       
       // 加入请求队列
       requestQueue.push({ code, resolve, reject, script });

@@ -10,23 +10,6 @@ export default defineConfig({
   server: {
     port: 8080, // 自定义端口号
     open: true, // 自动打开浏览器
-    proxy: {
-      '/api': {
-        target: 'http://fundgz.1234567.com.cn', // 新浪财经API域名
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-        configure: (proxy) => {
-          proxy.on('proxyRes', (res) => {
-            res.headers['Access-Control-Allow-Origin'] = '*';
-            // 禁用缓存
-            res.headers['Cache-Control'] =
-              'no-cache, no-store, must-revalidate';
-            res.headers['Pragma'] = 'no-cache';
-            res.headers['Expires'] = '0';
-          });
-        },
-      },
-    },
   },
   plugins: [
     vue(),

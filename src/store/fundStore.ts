@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { generateUUID, ACCOUNT } from '@/utils';
 import { dayjs } from 'element-plus';
 import { useElMessageBox } from '@/hooks';
+import { fundJsonpApi } from '@/jsonp/fundJsonpApi';
 
 const { errorToast } = useElMessageBox();
 
@@ -248,19 +249,10 @@ export const useFundStore = defineStore(
      * @returns 标准化的基金实时数据（与原结构一致）
      */
     const getFundInfo = async (item: IFundStore.IUserFundsItem) => {
-      // 修复：使用新浪财经实时估值 API（通过代理）
-      const res = await fetch(
-        `/api/js/${item.fund_code}.js?timestamp=${Date.now()}`,
-        {
-          method: 'GET',
-        },
-      );
-      const text = await res.text();
-      // 解析回调函数格式的数据
-      const dataStr = text.replace(/^jsonpgz\(|\);?$/g, '');
-      const fundData = JSON.parse(dataStr);
+      // 调用JSONP获取实时数据
+      const fundData = await fundJsonpApi(item.fund_code);
       // 查看最新估值如果是昨日清空数据
-      if (!dayjs().isSame(fundData.new_valuation_ime, 'day')) {
+      if (!dayjs().isSame(fundData.gztime, 'day')) {
         item.x_axis = [];
         item.y_axis = [];
       } else if (

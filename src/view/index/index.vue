@@ -74,6 +74,14 @@
             </div>
           </div>
         </div>
+        <!-- 按钮区域 -->
+        <div class="buttons">
+          <div class="buttons_add" @click="handleReplenish(item)">补仓</div>
+          <div class="buttons_reduce" @click="handleReduceStock(item)">
+            减仓
+          </div>
+          <div class="buttons_del" @click="handleRemove(item)">删除</div>
+        </div>
       </div>
     </div>
   </div>
@@ -208,5 +216,42 @@ const handleDownloadTemplate = () => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  .fd-card-box:hover {
+    .buttons {
+      opacity: 1;
+    }
+  }
+  .buttons {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 14px;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    div {
+      cursor: pointer;
+      &:hover {
+        text-shadow: 0px 0px 10px #fff;
+      }
+    }
+    &_add {
+      color: #7a43f8;
+    }
+    &_reduce {
+      color: #f84343;
+    }
+    &_del {
+      color: #fff;
+    }
+  }
 }
 </style>

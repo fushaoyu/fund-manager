@@ -1,35 +1,26 @@
 <template>
   <div
-    class="w-full flex flex-col gap-2 rounded-xl box-border p-[20px] text-[16px] bg-[#1A0F36] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)]"
+    class="w-full flex items-center gap-8 rounded-xl box-border p-[20px] text-[16px] bg-[#1A0F36] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)]"
   >
-    <div class="w-[160px] flex items-center pl-[50px] gap-3">
+    <div class="flex items-center gap-2">
       <div class="cursor-pointer" @click="openDapan">大盘云图</div>
       <el-icon class="cursor-pointer" size="12" @click="isCheck = !isCheck">
         <component :is="isCheck ? 'Hide' : 'View'" />
       </el-icon>
     </div>
-    <div class="flex items-center gap-2">
-      <div class="w-[120px] text-right text-[#F5F5F7]">账户资产:</div>
-      <div class="font-bold text-[24px]">
-        {{ !isCheck ? '****' : numberToMoney(accountAsset) }}
-      </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <div class="w-[120px] text-right text-[#F5F5F7]">今日收益:</div>
-      <div
-        :class="changeAmount <= 0 ? 'text-[#00c853]' : 'text-[#ff4444]'"
-        class="font-bold text-[24px]"
-      >
+    <div>账户资产：{{ !isCheck ? '****' : numberToMoney(accountAsset) }}</div>
+    <div>
+      今日收益：
+      <span :class="changeAmount <= 0 ? 'text-[#00c853]' : 'text-[#ff4444]'">
         {{
           !isCheck
             ? '****'
             : `${changeAmount > 0 ? '+' : ''}${numberToMoney(changeAmount)}`
         }}
-      </div>
+      </span>
     </div>
-    <div class="flex items-center gap-2">
-      <div class="w-[120px] text-right text-[#F5F5F7]">最后更新时间:</div>
-      <div>{{ updateDate }}</div>
+    <div>
+      最后更新时间：<span>{{ updateDate }}</span>
     </div>
   </div>
 </template>

@@ -24,6 +24,7 @@ declare module 'vue' {
     ElSelectV2: typeof import('element-plus/es')['ElSelectV2']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElText: typeof import('element-plus/es')['ElText']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     FdButton: typeof import('./../components/fd-button/index.vue')['default']
     FdDialogForm: typeof import('./../components/fd-dialog-form/index.vue')['default']

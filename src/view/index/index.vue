@@ -24,7 +24,9 @@
       <div class="fd-card-box" v-for="(item, index) in tableData" :key="index">
         <div class="fd-card-box_title">
           <div class="flex gap-2">
-            {{ item.fund_name }}
+            <el-text class="w-[200px]" type="primary" truncated>
+              {{ item.fund_name }}
+            </el-text>
             <span v-number-color>{{ item.holding_return_rate }}%</span>
           </div>
           <el-popover
@@ -149,7 +151,6 @@ onUnmounted(() => {
   timeOut.value && clearInterval(timeOut.value);
   timeOut.value = null;
 });
-
 
 // 刷新持仓数据
 const refreshFundData = async () => await fundStore.refreshFundData();

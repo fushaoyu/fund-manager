@@ -138,7 +138,10 @@ onMounted(() => {
   refreshFundData();
   timeOut.value = setInterval(() => {
     // 判断如果已经是在今日下午三点，就不刷新了
-    if (dayjs().isSame(dayjs().endOf('day').subtract(3, 'hour'), 'hour')) {
+    const isAfterOrEqual15 = dayjs().isAfter(
+      dayjs().hour(15).minute(0).second(0).millisecond(0),
+    );
+    if (isAfterOrEqual15) {
       errorToast('已到下午三点，不再刷新');
       timeOut.value && clearInterval(timeOut.value);
       timeOut.value = null;
